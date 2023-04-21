@@ -1,0 +1,23 @@
+version: '3.4'
+networks:
+  dynamicalloglevel:
+    name: dynamicalloglevel
+services:
+  dynamicalloglevel.api:
+    image: ${DOCKER_REGISTRY-}dynamicalloglevelapi
+    build:
+      context: .
+      dockerfile: DynamicalLogLevel.Api/Dockerfile
+    networks:
+      - dynamicalloglevel
+      
+  seq:
+    image: datalust/seq:latest
+    ports:
+        - 5380:80
+    environment:
+        ACCEPT_EULA: Y
+        SEQ_FIRSTRUN_ADMINPASSWORDHASH: QFNAaBtSRTLMzUBe04j+EJgAoAVXp59tYuoelFLItDYChbaMMj2CVau5DrTEv30cUd6xUhboQjE+t2ZrAZk0TXWmCnJBJRpFqiS7EDT56dZ3
+    networks:
+      - dynamicalloglevel
+        
